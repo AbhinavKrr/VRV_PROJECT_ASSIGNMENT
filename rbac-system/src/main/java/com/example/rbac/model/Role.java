@@ -1,35 +1,17 @@
 package com.example.rbac.model;
 
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.Entity;  // Use jakarta.persistence
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "roles")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data // Lombok generates getters, setters, toString, equals, and hashCode methods
 public class Role {
-	
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private Set<Permission> permissions = new HashSet<>();
-
 }
